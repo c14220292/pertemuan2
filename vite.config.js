@@ -13,6 +13,7 @@ export default defineConfig({
         todo: 'todo.html',
         blog: 'blog.html',
         context: 'context.html',
+        posts: 'posts.html',
       }
     }
   }
