@@ -14,6 +14,7 @@ export default defineConfig({
         blog: 'blog.html',
         context: 'context.html',
         posts: 'posts.html',
+        products: 'products.html',
       }
     }
   }
