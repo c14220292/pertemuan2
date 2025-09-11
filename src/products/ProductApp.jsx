@@ -67,7 +67,14 @@ export default function ProductApp() {
                 </header>
 
                 {selectedProduct ? (
-                    <ProductDetail product={selectedProduct} onBack={handleBackToList} />
+                    <ProductDetail 
+                        product={selectedProduct} 
+                        onBack={handleBackToList}
+                        onSearch={handleSearch}
+                        searchTerm={searchTerm}
+                        allProducts={products}
+                        onProductClick={handleProductClick}
+                    />
                 ) : (
                     <>
                         <SearchBar onSearch={handleSearch} searchTerm={searchTerm} />

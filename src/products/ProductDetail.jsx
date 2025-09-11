@@ -1,4 +1,6 @@
-export default function ProductDetail({ product, onBack }) {
+import SearchBar from "./SearchBar.jsx";
+
+export default function ProductDetail({ product, onBack, onSearch, searchTerm, allProducts, onProductClick }) {
     return (
         <div className="max-w-6xl mx-auto">
             <button
@@ -10,6 +12,55 @@ export default function ProductDetail({ product, onBack }) {
                 </svg>
                 Kembali ke Daftar Produk
             </button>
+
+            <div className="mb-8">
+                <SearchBar onSearch={onSearch} searchTerm={searchTerm} />
+                {searchTerm && (
+                    <div className="mt-4">
+                        <p className="text-sm text-gray-600 mb-3">
+                            Hasil pencarian untuk "{searchTerm}":
+                        </p>
+                        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                            {allProducts
+                                .filter(p => 
+                                    p.title.toLowerCase().includes(searchTerm.toLowerCase()) && 
+                                    p.id !== product.id
+                                )
+                                .slice(0, 6)
+                                .map((searchProduct) => (
+                                    <div
+                                        key={searchProduct.id}
+                                        className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer p-3 border"
+                                        onClick={() => onProductClick(searchProduct)}
+                                    >
+                                        <div className="flex items-center space-x-3">
+                                            <img
+                                                src={searchProduct.image}
+                                                alt={searchProduct.title}
+                                                className="h-12 w-12 object-contain flex-shrink-0"
+                                            />
+                                            <div className="flex-1 min-w-0">
+                                                <h4 className="text-sm font-medium text-gray-900 truncate">
+                                                    {searchProduct.title}
+                                                </h4>
+                                                <p className="text-sm font-bold text-blue-600">
+                                                    ${searchProduct.price}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))
+                            }
+                        </div>
+                        {allProducts.filter(p => 
+                            p.title.toLowerCase().includes(searchTerm.toLowerCase()) && 
+                            p.id !== product.id
+                        ).length === 0 && (
+                            <p className="text-gray-500 text-sm">Tidak ada produk lain yang cocok dengan pencarian.</p>
+                        )}
+                    </div>
+                )}
+            </div>
 
             <div className="bg-white rounded-lg shadow-xl overflow-hidden">
                 <div className="md:flex">
